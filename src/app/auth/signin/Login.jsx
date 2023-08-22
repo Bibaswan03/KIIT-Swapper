@@ -1,5 +1,4 @@
 "use client";
-import { getProviders } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";

@@ -115,7 +115,7 @@ function LoginNav({ login, data }) {
         theme: "dark",
       });
       setTimeout(() => {
-        window.location = "http://localhost:3000/SwapConfirm";
+        window.location = `http://localhost:3000/SwapConfirm/?email=${email}&receiver=${reciever}`;
       }, 500);
     }
   };
@@ -226,8 +226,6 @@ function LoginNav({ login, data }) {
                   </div>
                 )}
 
-                {/* <SiNike className="text-green-600 text-3xl" />
-              <RxCross2 className="text-red-500 text-3xl" /> */}
               </div>
             )}
           </div>
@@ -394,7 +392,7 @@ function LoginNav({ login, data }) {
                 {notification && (
                   <div
                     onMouseLeave={() => setnotification(false)}
-                    className="absolute right-10 z-50  mt-2 w-48 md:w-64 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-10 z-50 max-h-56 overflow-y-scroll scrollbar overflow-x-hidden mt-2 w-48 md:w-72 origin-top-right rounded-md bg-slate-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"

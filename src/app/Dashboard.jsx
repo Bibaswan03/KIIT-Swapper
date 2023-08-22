@@ -8,7 +8,7 @@ import { LiaWhatsapp } from "react-icons/lia";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Dashboard({ data, swap, login }) {
+function Dashboard({ data, swap, login, logindetails}) {
   const user_array = [];
   let i, j,k;
   const [ursec, setursec] = useState("")
@@ -18,13 +18,17 @@ function Dashboard({ data, swap, login }) {
   const [ursec4, setursec4] = useState("")
   const [urstatus, seturstatus] = useState(false)
   let dis = false;
+  let semm=logindetails.user.semester;
+  let branchh=logindetails.user.branch;
+  console.log(semm,branchh)
+
   for (i in data) {
-    if (data[i].email != login.user.email) {
+    if (data[i].email != login.user.email && data[i].semester==semm && data[i].branch==branchh) {
       user_array.push(data[i]);
     }
   }
   for (j in data) {
-    if (data[j].email == login.user.email && data[j].section1 == "empty") {
+    if (data[j].email == login.user.email && data[j].section1 == "EMPTY") {
       dis = true;
     }
   }
@@ -52,6 +56,7 @@ function Dashboard({ data, swap, login }) {
       setdetails(true);
     }
     secdetail();
+    
   }, []);
 
   let name;
@@ -161,7 +166,7 @@ function Dashboard({ data, swap, login }) {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <ToastContainer
         position="bottom-left"
         autoClose={5000}
@@ -174,6 +179,7 @@ function Dashboard({ data, swap, login }) {
         pauseOnHover
         theme="dark"
       />
+      
       {contact && (
         <div className="w-screen h-screen bg-black/50 z-30 backdrop-blur-0 flex items-center justify-center fixed   top-0 left-0">
           <div className="relative p-4">
@@ -211,7 +217,7 @@ function Dashboard({ data, swap, login }) {
         <div
           id="marketing-banner"
           tabIndex={-1}
-          className="fixed mt-20 z-10 flex my-12 flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
+          className="absolute mt-20 z-10 flex my-12 flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
         >
           <p className="flex items-center text-sm font-normal test-[0.8rem] text-center text-gray-100">
             To opt for section swap , you have to fill your details first
@@ -232,10 +238,10 @@ function Dashboard({ data, swap, login }) {
         <div
         id="marketing-banner"
         tabIndex={-1}
-        className="fixed mt-20 z-10 flex my-12 flex-col md:flex-row md:px-10 px-4 justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
+        className="absolute mt-20 z-10 flex my-12 flex-col md:flex-row md:px-10 px-4 justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
       >
         {urstatus && <p className="flex items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
-          Congratulations!!!!  You have successfully swapped your section. Have a good sem ahead.
+          Congratulations!!!!  You have successfully swapped your section. Have a good sem ahead <Link className="text-purple-600 cursor-pointer font-semibold hover:underline ml-2"  href={'/SwapConfirm'}> Click To View</Link>
         </p>}
         <p className="flex capitalize items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
           Your current section : {ursec} 
@@ -313,13 +319,10 @@ function Dashboard({ data, swap, login }) {
                   Roll No
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Section
+                  Current Section
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Phone
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Needed sec
+                  Needed section
                 </th>
                 <th scope="col" className="text-center py-3">
                   Actions
@@ -360,9 +363,7 @@ function Dashboard({ data, swap, login }) {
                         <td className="px-6 py-4 text-gray-50 ">
                           {item.section}
                         </td>
-                        <td className="px-6 py-4 text-gray-50 ">
-                          {item.phone}
-                        </td>
+                        
                         <td className="px-6 py-4 text-gray-50 ">
                           {item.section1 !== "EMPTY" && (
                             <span>{item.section1}</span>

@@ -2,7 +2,7 @@
 import { getProviders } from "next-auth/react";
 import Image from "next/image";
 import Login from "./Login";
-import img from "../../Images/icons.png";
+import img from "../../images/icons.png";
 
 async function Try() {
  
