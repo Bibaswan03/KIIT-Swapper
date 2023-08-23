@@ -17,8 +17,8 @@ function ClientComponent({ data, data2 }) {
               <p className="text-justify">Email: {data.email}</p>
               <p className="text-justify">Name : {data.name}</p>
               <p className="text-justify">Roll : {data.roll}</p>
-              <p className="text-justify">Email : {data.oldsection}</p>
-              <p className="text-justify">Phone : {data.newsection}</p>
+              <p className="text-justify">Old section : {data.oldsection}</p>
+              <p className="text-justify">New section : {data.newsection}</p>
             </div>
             <div className="">
               <span className="text-center font-semibold text-purple-600">
@@ -27,8 +27,8 @@ function ClientComponent({ data, data2 }) {
               <p className="text-justify">Email: {data2.email}</p>
               <p className="text-justify">Name : {data2.name}</p>
               <p className="text-justify">Roll : {data2.roll}</p>
-              <p className="text-justify">Email : {data2.oldsection}</p>
-              <p className="text-justify">Phone : {data2.newsection}</p>
+              <p className="text-justify">Old section : {data2.oldsection}</p>
+              <p className="text-justify">New section : {data2.newsection}</p>
             </div>
           </div>
 

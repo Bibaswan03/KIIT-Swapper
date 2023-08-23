@@ -16,7 +16,7 @@ function Login({ providers }) {
             <button
               onClick={() => {
                 signIn(item.id, {
-                  callbackUrl: "http://localhost:3000/",
+                  callbackUrl: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`,
                 });
                 setload(true);
               }}

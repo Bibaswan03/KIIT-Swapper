@@ -8,7 +8,7 @@ async function page() {
   if(login){
     let email = login.user.email;
       const d = { email: email };
-      let res = await fetch(`http://localhost:3000/api/getname`, {
+      let res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getname`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

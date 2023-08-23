@@ -20,7 +20,6 @@ function Dashboard({ data, swap, login, logindetails}) {
   let dis = false;
   let semm=logindetails.user.semester;
   let branchh=logindetails.user.branch;
-  console.log(semm,branchh)
 
   for (i in data) {
     if (data[i].email != login.user.email && data[i].semester==semm && data[i].branch==branchh) {
@@ -75,7 +74,7 @@ function Dashboard({ data, swap, login, logindetails}) {
       body: JSON.stringify({ email: email, reciever: login.user.email }),
     });
     const singlemsg = await singlemsgchk.json();
-    console.log("Msg check : ", singlemsg)
+
     if (singlemsg.success) {
       toast.info(
         "You have already sent a request or you have a pending request from this person.",
@@ -117,7 +116,7 @@ function Dashboard({ data, swap, login, logindetails}) {
           response.user.section3 == allowswap.user.section ||
           response.user.section4 == allowswap.user.section)
       ) {
-        toast.success("sending swap req!!", {
+        toast.success("Sending swap request!!", {
           position: "bottom-left",
           autoClose: 1500,
           hideProgressBar: false,
@@ -149,7 +148,7 @@ function Dashboard({ data, swap, login, logindetails}) {
         const response1 = await res1.json();
       } else {
         toast.warn(
-          "You are not allowed to send swap request due to mismatch of section!!",
+          "You are not allowed to send swap request due to mismatch of section.",
           {
             position: "top-center",
             autoClose: 5500,
@@ -201,11 +200,10 @@ function Dashboard({ data, swap, login, logindetails}) {
                 <p className="text-justify">Email : {contactdetails.email}</p>
                 <p className="text-justify">Phone : {contactdetails.phone}</p>
                 <div className="flex items-center justify-center space-x-10 mt-2">
-                  <LiaWhatsapp className="text-2xl text-green-500" />
-                  <HiOutlineMail className="text-2xl text-red-500 " />
+                  <a href={`https://wa.me/${contactdetails.phone}/`} target="_blank"><LiaWhatsapp  className="text-2xl text-green-500" /></a>
+                  <a href={`mailto:${contactdetails.email}`} target="_blank"><HiOutlineMail className="text-2xl text-red-500 " /></a>
 
-                  {/* <SiNike className="text-green-600 text-3xl" />
-              <RxCross2 className="text-red-500 text-3xl" /> */}
+                  
                 </div>
               </div>
             )}
@@ -238,7 +236,7 @@ function Dashboard({ data, swap, login, logindetails}) {
         <div
         id="marketing-banner"
         tabIndex={-1}
-        className="absolute mt-20 z-10 flex my-12 flex-col md:flex-row md:px-10 px-4 justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
+        className="absolute mt-20  z-10 flex my-12 flex-col md:flex-row md:px-10 px-4 justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
       >
         {urstatus && <p className="flex items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
           Congratulations!!!!  You have successfully swapped your section. Have a good sem ahead <Link className="text-purple-600 cursor-pointer font-semibold hover:underline ml-2"  href={'/SwapConfirm'}> Click To View</Link>
@@ -254,7 +252,7 @@ function Dashboard({ data, swap, login, logindetails}) {
         
       </div>}
 
-      <div className="h-10 md:h-3" />
+      <div className="h-16 md:h-3" />
 
       <div className="mt-10 mx-4">
         <form>
@@ -277,7 +275,7 @@ function Dashboard({ data, swap, login, logindetails}) {
                   setcategory(e.target.value);
                 }}
                 id="countries_disabled"
-                className="block p-2.5 w-full z-20 text-sm text-gray-100 bg-gray-800 rounded-l-lg  
+                className="block p-2.5 w-full z-20 text-sm capitalize text-gray-100 bg-gray-800 rounded-l-lg  
                 focus:outline-none  "
               >
                 <option>Select category</option>
@@ -334,7 +332,7 @@ function Dashboard({ data, swap, login, logindetails}) {
                 .filter((item) => {
                   return search == "" ||
                     category == "" ||
-                    category == "Select option"
+                    category == "Select category"
                     ? item
                     : category == "section"
                     ? item.section.includes(search.toUpperCase()) ||

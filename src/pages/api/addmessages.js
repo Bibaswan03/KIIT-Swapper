@@ -5,7 +5,7 @@ const handler = async (req, res) => {
         
         try {
             const { name,roll,email,phone,section,message,reciever } = req.body;
-            console.log(name,roll,email,phone,section,message,reciever)
+          
             const m = new Message({
                 name:name,
                 roll:roll,

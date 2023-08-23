@@ -78,15 +78,15 @@ function LoginNav({ login, data }) {
         theme: "dark",
       });
       setTimeout(() => {
-        window.location = "http://localhost:3000/";
+        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}`;
       }, 500);
     }
   };
 
   const finalaccept = async (email, reciever) => {
-    toast.info("preparing Swap process", {
+    toast.info("Preparing swap process", {
       position: "bottom-left",
-      autoClose: 1500,
+      autoClose: 500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -104,7 +104,7 @@ function LoginNav({ login, data }) {
     });
     let response = await res.json();
     if (response.success) {
-      toast.success("swap success!!", {
+      toast.success("Swap successful!!", {
         position: "bottom-left",
         autoClose: 1500,
         hideProgressBar: false,
@@ -115,8 +115,23 @@ function LoginNav({ login, data }) {
         theme: "dark",
       });
       setTimeout(() => {
-        window.location = `http://localhost:3000/SwapConfirm/?email=${email}&receiver=${reciever}`;
+        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}/SwapConfirm`;
       }, 500);
+    }
+    else{
+      toast.error("Swap unsuccessful!!", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setTimeout(() => {
+        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+      }, 2500);
     }
   };
 
@@ -141,7 +156,7 @@ function LoginNav({ login, data }) {
     });
     setTimeout(() => {
       signOut({
-        callbackUrl: process.env.VERCEL_URL || "http://localhost:3000",
+        callbackUrl: `${process.env.NEXT_PUBLIC_VERCEL_URL}`,
       });
     }, 500);
   };
@@ -280,19 +295,19 @@ function LoginNav({ login, data }) {
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex items-center space-x-4">
                   <Link
-                    href={"/"}
+                    href={"/About"}
                     className="text-gray-300 hover:scale-95 hover:text-purple-500 rounded-md px-3 py-2 text-[1rem] font-medium"
                   >
                     About
                   </Link>
                   <Link
-                    href={"/"}
+                    href={"/Manual"}
                     className="text-gray-300 hover:scale-95 hover:text-purple-500 rounded-md px-3 py-2 text-[1rem] font-medium"
                   >
                     Manual
                   </Link>
                   <Link
-                    href={"/"}
+                    href={"/Feedback"}
                     className="text-gray-300 hover:scale-95 hover:text-purple-500 rounded-md px-3 py-2 text-[1rem] font-medium"
                   >
                     Feedback
@@ -456,19 +471,19 @@ function LoginNav({ login, data }) {
           <div className="sm:hidden" id="mobile-menu">
             <div className="space-y-1 px-2 pb-3 pt-2">
               <Link
-                href={"/"}
+                href={"/About"}
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
               >
                 About
               </Link>
               <Link
-                href={"/"}
+                href={"/Manual"}
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
               >
                 Manual
               </Link>
               <Link
-                href={"/"}
+                href={"/Feedback"}
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
               >
                 Feedback

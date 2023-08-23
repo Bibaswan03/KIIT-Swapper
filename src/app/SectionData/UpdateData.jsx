@@ -13,7 +13,7 @@ function UpdateData({ login }) {
   const [section3, setsection3] = useState("EMPTY");
   const [section4, setsection4] = useState("EMPTY");
   const [disable, setdisable] = useState(true);
-
+  const [getsure, setgetsure] = useState(false)
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.name === "section") {
@@ -58,7 +58,6 @@ function UpdateData({ login }) {
       section3: section3.toUpperCase(),
       section4: section4.toUpperCase(),
     };
-    console.log(data);
 
     let res = await fetch(`/api/updatedata`, {
       method: "POST",
@@ -84,10 +83,10 @@ function UpdateData({ login }) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
       setTimeout(() => {
-        window.location = "http://localhost:3000";
+        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}`;
       }, 1500);
     }
   };
@@ -110,7 +109,21 @@ function UpdateData({ login }) {
           Enter Your Section Details
         </h1>
         <hr className="w-[30%] border-2 border-purple-500 mx-auto px-10 mb-10" />
-        <form className="w-[50vw] md:p-[100px] mx-auto my-10" onSubmit={(e)=>submitupdate(e)}>
+        <div className="flex justify-center items-center">
+          <div>
+          <p className="text-center text-[0.90rem] my-1 text-white">Note:</p>
+          <p className="text-justify text-[0.85rem] my-1 text-white">
+            Details once filled, cannot be changed later
+          </p>
+          <p className="text-justify text-[0.85rem] my-1 text-white">
+            Section input format : Branch_Code-Section_Number
+          </p></div>
+        </div>
+
+        <form
+          className="w-[50vw] md:px-[100px] mx-auto my-10 mt-4"
+          onSubmit={(e) => submitupdate(e)}
+        >
           <div className="relative z-0 w-full mb-6 group">
             <input
               onChange={handleChange}
@@ -131,7 +144,6 @@ function UpdateData({ login }) {
           <div className="relative z-0 w-full mb-6 group">
             <input
               onChange={handleChange}
-              value={section1}
               type="text"
               name="section1"
               id="floating_password"
@@ -156,7 +168,6 @@ function UpdateData({ login }) {
                 onChange={handleChange}
                 type="text"
                 name="section2"
-              
                 className="block py-2.5 px-0 w-full text-sm text-gray-100 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-purple-600 peer"
                 placeholder=" "
                 required=""
@@ -176,7 +187,6 @@ function UpdateData({ login }) {
                 onChange={handleChange}
                 type="text"
                 name="section3"
-            
                 className="block py-2.5 px-0 w-full text-sm text-gray-100 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-purple-600 peer"
                 placeholder=" "
                 required=""
@@ -211,9 +221,25 @@ function UpdateData({ login }) {
               </label>
             </div>
           </div>
+          <div className="flex items-center mt-1">
+            <input
+              id="link-checkbox"
+              onChange={() => setgetsure(!getsure)}
+              type="checkbox"
+              defaultValue=""
+              className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500"
+            />
+            <label
+              htmlFor="link-checkbox"
+              className="ml-2 text-sm font-medium text-white "
+            >
+              I hereby declare that all the details provided are as per requirements
+              mentioned below
+            </label>
+          </div>
           <div className="flex items-center justify-center mt-4">
             <button
-              disabled={disable}
+              disabled={disable || !getsure}
               type="submit"
               className=" text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 disabled:cursor-not-allowed disabled:bg-purple-400 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
             >
@@ -221,8 +247,8 @@ function UpdateData({ login }) {
             </button>
           </div>
           <p className="text-center text-[0.75rem] my-2 text-red-500">
-              *All fields are required
-            </p>
+            *Fields are required
+          </p>
         </form>
       </div>
     </>

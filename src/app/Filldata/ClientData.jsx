@@ -16,9 +16,11 @@ function ClientData({ login, response }) {
   const [section, setsection] = useState("");
   const [disable, setdisable] = useState(true);
   const [disp, setdisp] = useState(false);
+  const [getsure, setgetsure] = useState(false);
+
   useEffect(() => {
     if (response.success) {
-      router.push("http://localhost:3000");
+      router.push(process.env.NEXT_PUBLIC_VERCEL_URL);
     } else {
       setdisp(true);
     }
@@ -56,13 +58,13 @@ function ClientData({ login, response }) {
     setdisable(true);
     toast.info("Please wait while your form is submitting..", {
       position: "bottom-left",
-      autoClose: 5000,
+      autoClose: 500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme: "dark",
     });
     let em = login.user.email;
     e.preventDefault();
@@ -98,16 +100,16 @@ function ClientData({ login, response }) {
 
       toast.success("Congrats! Your data is updated..", {
         position: "bottom-left",
-        autoClose: 200,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
       setTimeout(() => {
-        window.location = "http://localhost:3000";
+        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}`;
       }, 500);
     }
   };
@@ -167,8 +169,7 @@ function ClientData({ login, response }) {
                 htmlFor="floating_phone"
                 className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Whatsapp Number (123-456-7890){" "}
-                <span className="text-red-500 "> *</span>
+                Whatsapp Number <span className="text-red-500 "> *</span>
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
@@ -205,14 +206,14 @@ function ClientData({ login, response }) {
                   htmlFor="floating_sem"
                   className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Branch <span className="text-red-500 "> *</span>
+                  Branch (Only branch code)<span className="text-red-500 "> *</span>
                 </label>
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
                   value={year}
                   onChange={handleChange}
-                  type="text"
+                  type="number"
                   name="year"
                   className="block py-2.5 px-0 w-full text-[0.7rem] text-gray-50  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-purple-600 peer"
                   placeholder=" "
@@ -224,6 +225,8 @@ function ClientData({ login, response }) {
                 >
                   Year <span className="text-red-500 "> *</span>
                 </label>
+                
+                
               </div>
             </div>
             <div className="grid md:grid-cols-2 md:gap-6">
@@ -231,7 +234,7 @@ function ClientData({ login, response }) {
                 <input
                   value={semester}
                   onChange={handleChange}
-                  type="text"
+                  type="number"
                   name="semester"
                   className="block py-2.5 px-0 w-full text-[0.7rem] text-gray-50  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-purple-600 peer"
                   placeholder=" "
@@ -248,7 +251,7 @@ function ClientData({ login, response }) {
                 <input
                   value={section}
                   onChange={handleChange}
-                  type="text"
+                  type="tel"
                   name="section"
                   className="block py-2.5 px-0 w-full text-[0.7rem] text-gray-50  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-purple-600 peer"
                   placeholder=" "
@@ -258,22 +261,41 @@ function ClientData({ login, response }) {
                   htmlFor="floating_company"
                   className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Section (Format: Branch-Number){" "}
+                  Section (Format: Branch_Code-Section_Number){" "}
                   <span className="text-red-500 "> *</span>
                 </label>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex items-center mt-1">
+              <input
+                id="link-checkbox"
+                onChange={() => setgetsure(!getsure)}
+                type="checkbox"
+                defaultValue=""
+                className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500"
+              />
+              <label
+                htmlFor="link-checkbox"
+                className="ml-2 text-sm font-medium text-white "
+              >
+                I hereby declare that all the details provided are true and are as per requirements
+              </label>
+            </div>
+
+            <div className="flex justify-center pt-6">
               <button
                 type="submit"
-                disabled={disable}
+                disabled={disable || !getsure}
                 className="disabled:bg-purple-400 disabled:cursor-not-allowed text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-[0.7rem] w-full [0.7rem]:w-auto px-5 py-2.5 text-center"
               >
                 Submit
               </button>
             </div>
-            <p className="text-center text-[0.75rem] my-1 text-red-500">
+            <p className="text-center text-[0.75rem] my-1 pt-2 text-red-500">
               *All fields are required
+            </p>
+            <p className="text-center text-[0.75rem] my-1 text-white">
+              Details other than whatsapp number once filled, cannot be changed for the rest of the semester 
             </p>
           </form>
         </>

@@ -8,7 +8,7 @@ function Logout() {
     <div>
       <VscAccount className="text-2xl font-semibold" onClick={() => signOut({
         callbackUrl:
-          process.env.VERCEL_URL || "http://localhost:3000",
+        `${process.env.NEXT_PUBLIC_VERCEL_URL}`,
       })} />
 
     </div>

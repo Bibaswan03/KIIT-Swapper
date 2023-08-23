@@ -7,6 +7,7 @@ const handler = async (req, res) => {
         
         try {
             const data=await Message.find({$or:[{reciever:req.body.reciever},{reciever:req.body.email},{email:req.body.email},{email:req.body.reciever}]});
+            if(data[0].status==false && data[1].status==false){
             let i,updatestatus=[];
             for(i in data)
             {
@@ -19,7 +20,11 @@ const handler = async (req, res) => {
             const t2=await s2.save();
             const c1=await User.findOneAndUpdate({email:data1[0].email},{section:data1[1].section,section1:"EMPTY",section2:"EMPTY",section3:"EMPTY",section4:"EMPTY",swapstatus:true});
             const c2=await User.findOneAndUpdate({email:data1[1].email},{section:data1[0].section,section1:"EMPTY",section2:"EMPTY",section3:"EMPTY",section4:"EMPTY",swapstatus:true});           
-            res.status(201).json({success:true});
+            res.status(201).json({success:true});}
+            else
+            {
+                res.status(201).json({success:false});
+            }
         } catch (error) {
             res.status(500).send({success:false, error: error });
         }

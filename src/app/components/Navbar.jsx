@@ -8,7 +8,7 @@ async function Navbar() {
   const login = await getServerSession();
   let response1;
   if (login) {
-    let res = await fetch("http://localhost:3000/api/getmessage", {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getmessage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

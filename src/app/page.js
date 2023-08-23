@@ -10,7 +10,7 @@ export default async function Home() {
   let response22;
   if (login) {
     const email = login.user.email;
-    let res2 = await fetch(`http://localhost:3000/api/getFillConfirm`, {
+    let res2 = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getFillConfirm`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export default async function Home() {
       body: JSON.stringify({ email: email }),
     });
     response22 = await res2.json();
-    let ds = await fetch("http://localhost:3000/api/getSwapDetails", {
+    let ds = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getSwapDetails`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,10 +26,10 @@ export default async function Home() {
       body: JSON.stringify({ email: email }),
     });
     dataSwap = await ds.json();
-    const data = await fetch("http://localhost:3000/api/getUsers");
+    const data = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getUsers`);
     const res = await data.json();
     data1 = res.data;
-    const display = await fetch("http://localhost:3000/api/getname", {
+    const display = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getname`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

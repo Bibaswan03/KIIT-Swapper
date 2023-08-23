@@ -5,7 +5,7 @@ async function page() {
   const session = await getServerSession();
   let dataSwap;
   if (session) {
-    let ds = await fetch("http://localhost:3000/api/getswapers", {
+    let ds = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getswapers`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,6 @@ async function page() {
       body: JSON.stringify({ email: session.user.email }),
     });
     dataSwap = await ds.json();
-    console.log(dataSwap);
   }
   return (
     <>

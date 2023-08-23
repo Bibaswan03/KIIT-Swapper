@@ -83,19 +83,19 @@ function LogoutNav() {
           <div className="hidden sm:ml-6 sm:block">
             <div className="flex items-center space-x-4">
               <Link
-                href={"/"}
+                href={"/About"}
                 className="text-gray-300 hover:scale-95 hover:text-purple-500 rounded-md px-3 py-2 text-[1rem] font-medium"
               >
                 About
               </Link>
               <Link
-                href={"/"}
+                href={"/Manual"}
                 className="text-gray-300 hover:scale-95 hover:text-purple-500 rounded-md px-3 py-2 text-[1rem] font-medium"
               >
                 Manual
               </Link>
               <Link
-                href={"/"}
+                href={"/Feedback"}
                 className="text-gray-300 hover:scale-95 hover:text-purple-500 rounded-md px-3 py-2 text-[1rem] font-medium"
               >
                 Feedback
@@ -111,19 +111,19 @@ function LogoutNav() {
       <div className="sm:hidden" id="mobile-menu">
         <div className="space-y-1 px-2 pb-3 pt-2">
           <Link
-            href={"/"}
+            href={"/About"}
             className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
           >
             About
           </Link>
           <Link
-            href={"/"}
+            href={"/Manual"}
             className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
           >
             Manual
           </Link>
           <Link
-            href={"/"}
+            href={"/Feedback"}
             className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
           >
             Feedback

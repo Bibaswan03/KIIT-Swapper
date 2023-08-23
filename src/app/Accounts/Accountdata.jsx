@@ -32,15 +32,6 @@ function Accountdata({ login, data }) {
     if (e.target.name === "phone") {
       setphone(e.target.value);
     }
-    if (e.target.name === "year") {
-      setyear(e.target.value);
-    }
-    if (e.target.name === "semester") {
-      setsemester(e.target.value);
-    }
-    if (e.target.name === "section") {
-      setsection(e.target.value);
-    }
   };
 
   const submitupdate = async (e) => {
@@ -72,11 +63,11 @@ function Accountdata({ login, data }) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
       setTimeout(() => {
         //window.location.reload()
-        router.push("http://localhost:3000/Accounts");
+        router.push(`${process.env.NEXT_PUBLIC_VERCEL_URL}/Accounts`);
       }, 1500);
     }
   };
@@ -200,7 +191,6 @@ function Accountdata({ login, data }) {
                       Branch
                     </label>
                     <input
-                      onChange={handleChange}
                       readOnly={true}
                       value={branch}
                       type="text"
@@ -219,10 +209,10 @@ function Accountdata({ login, data }) {
                       Year
                     </label>
                     <input
-                      onChange={handleChange}
+                      readOnly={true}
                       value={year}
                       type="text"
-                      id="Year"
+                      id="year"
                       name="year"
                       className="w-full bg-slate-800  rounded border border-gray-300 focus:border-purple-500 focus:bg-slate-900 focus:ring-2 focus:ring-purple-200 text-base outline-none text-gray-300 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     />
@@ -237,7 +227,7 @@ function Accountdata({ login, data }) {
                       Semester
                     </label>
                     <input
-                      onChange={handleChange}
+                      readOnly={true}
                       value={semester}
                       type="text"
                       id="semester"
@@ -255,7 +245,7 @@ function Accountdata({ login, data }) {
                       Section
                     </label>
                     <input
-                      onChange={handleChange}
+                      readOnly={true}
                       value={section}
                       type="text"
                       id="section"
