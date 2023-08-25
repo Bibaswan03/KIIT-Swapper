@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 
 import img from '../images/IMG_20221229_220623.jpg'
@@ -35,10 +36,10 @@ function page() {
         </h1>
         <div className="flex justify-center items-center space-x-10">
             <div className="h-64 w-64">
-                <Image src={img} alt="bibu" width={500} height={500}/>
+                <Image src={img} alt="bibu" width={500} height={500}/><p className="text-purple-200 text-center mt-1">Bibaswan Nandi</p>
             </div>
             <div className="h-64 w-64">
-                <Image className="mix-blend-screen " alt="debu" width={500} height={500} src={img2}/>
+                <Image className="mix-blend-screen " alt="debu" width={500} height={500} src={img2}/><p className="text-purple-200 text-center mt-1">Debangan Bhattacharyya</p>
             </div>
         </div>
     </div>

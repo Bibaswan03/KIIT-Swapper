@@ -7,7 +7,8 @@ const handler = async (req, res) => {
         
         try {
             const data=await Message.find({$or:[{reciever:req.body.reciever},{reciever:req.body.email},{email:req.body.email},{email:req.body.reciever}]});
-            if(data[0].status==false && data[1].status==false){
+            console.log(data,data.length);
+            if(data.length==1 || (data[0].status==false && data[1].status==false)){
             let i,updatestatus=[];
             for(i in data)
             {

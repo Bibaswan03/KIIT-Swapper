@@ -25,7 +25,7 @@ function Accountdata({ login, data }) {
     setsemester(response.user.semester);
     setyear(response.user.year);
     setsection(response.user.section);
-  }, []);
+  }, [response]);
 
   const handleChange = (e) => {
     e.preventDefault();

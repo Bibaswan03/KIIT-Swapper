@@ -141,7 +141,7 @@ function LoginNav({ login, data }) {
     if (msg_Array.length != 0) {
       setnomessage(false);
     }
-  }, []);
+  }, [msg_Array]);
 
   const logout = () => {
     toast.success("Logging you out!!", {
@@ -385,7 +385,7 @@ function LoginNav({ login, data }) {
                       Your Profile
                     </Link>
                     <Link
-                      href="#"
+                      href="/Swaphistory"
                       className="block px-4 py-2 text-sm cursor-pointer text-purple-500 hover:text-purple-300"
                       role="menuitem"
                       tabIndex={-1}
