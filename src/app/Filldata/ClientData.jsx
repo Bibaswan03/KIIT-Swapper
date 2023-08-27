@@ -130,10 +130,10 @@ function ClientData({ login, response }) {
       />
       {disp && (
         <>
-          <h1 className="my-4 text-center text-2xl font-bold text-cente capitalize text-purple-200">
+          <h1 className="mt-10 text-center text-2xl font-bold text-cente capitalize text-purple-200">
             Enter Your Details
           </h1>
-          <hr className="w-[30%] border-2 border-purple-500 mx-auto px-10 mb-10" />
+          <hr className="w-[30%] border-2 border-purple-500 mt-4 mx-auto px-10 mb-10" />
           <form className="w-[50vw] mx-auto my-10" onSubmit={submitres}>
             <div className="relative z-0 w-full mb-6 group">
               <input
@@ -206,7 +206,7 @@ function ClientData({ login, response }) {
                   htmlFor="floating_sem"
                   className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Branch (Only branch code)<span className="text-red-500 "> *</span>
+                  Branch (Ex: CSE){" "}<span className="text-red-500 "> *</span>
                 </label>
               </div>
               <div className="relative z-0 w-full mb-6 group">
@@ -223,7 +223,7 @@ function ClientData({ login, response }) {
                   htmlFor="floating_last_name"
                   className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Year <span className="text-red-500 "> *</span>
+                  Year (Ex: 3){" "}<span className="text-red-500 "> *</span>
                 </label>
                 
                 
@@ -244,14 +244,14 @@ function ClientData({ login, response }) {
                   htmlFor="floating_phone"
                   className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Semester <span className="text-red-500 "> *</span>
+                  Semester (Ex: 5){" "}<span className="text-red-500 "> *</span>
                 </label>
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
                   value={section}
                   onChange={handleChange}
-                  type="tel"
+                  type="text"
                   name="section"
                   className="block py-2.5 px-0 w-full text-[0.7rem] text-gray-50  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-purple-600 peer"
                   placeholder=" "
@@ -259,9 +259,9 @@ function ClientData({ login, response }) {
                 />
                 <label
                   htmlFor="floating_company"
-                  className="peer-focus:font-medium absolute text-[0.7rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="peer-focus:font-medium absolute md:text-[0.7rem] text-[0.65rem] text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Section (Format: Branch_Code-Section_Number){" "}
+                  Section (Ex: CSE-9){" "}
                   <span className="text-red-500 "> *</span>
                 </label>
               </div>

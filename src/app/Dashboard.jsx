@@ -8,21 +8,25 @@ import { LiaWhatsapp } from "react-icons/lia";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function Dashboard({ data, swap, login, logindetails}) {
+function Dashboard({ data, swap, login, logindetails }) {
   const user_array = [];
-  let i, j,k;
-  const [ursec, setursec] = useState("")
-  const [ursec1, setursec1] = useState("")
-  const [ursec2, setursec2] = useState("")
-  const [ursec3, setursec3] = useState("")
-  const [ursec4, setursec4] = useState("")
-  const [urstatus, seturstatus] = useState(false)
+  let i, j, k;
+  const [ursec, setursec] = useState("");
+  const [ursec1, setursec1] = useState("");
+  const [ursec2, setursec2] = useState("");
+  const [ursec3, setursec3] = useState("");
+  const [ursec4, setursec4] = useState("");
+  const [urstatus, seturstatus] = useState(false);
   let dis = false;
-  let semm=logindetails.user.semester;
-  let branchh=logindetails.user.branch;
+  let semm = logindetails.user.semester;
+  let branchh = logindetails.user.branch;
 
   for (i in data) {
-    if (data[i].email != login.user.email && data[i].semester==semm && data[i].branch==branchh) {
+    if (
+      data[i].email != login.user.email &&
+      data[i].semester == semm &&
+      data[i].branch == branchh
+    ) {
       user_array.push(data[i]);
     }
   }
@@ -31,18 +35,18 @@ function Dashboard({ data, swap, login, logindetails}) {
       dis = true;
     }
   }
-  const secdetail=()=>{
-  for (k in data) {
-    if (data[k].email == login.user.email) {
-      setursec(data[k].section)
-      setursec1(data[k].section1)
-      setursec2(data[k].section2)
-      setursec3(data[k].section3)
-      setursec4(data[k].section4)
-      seturstatus(data[k].swapstatus)
+  const secdetail = () => {
+    for (k in data) {
+      if (data[k].email == login.user.email) {
+        setursec(data[k].section);
+        setursec1(data[k].section1);
+        setursec2(data[k].section2);
+        setursec3(data[k].section3);
+        setursec4(data[k].section4);
+        seturstatus(data[k].swapstatus);
+      }
     }
-  }
-  }
+  };
   const [contactdetails, setcontactdetails] = useState({});
 
   const [details, setdetails] = useState(false);
@@ -55,7 +59,6 @@ function Dashboard({ data, swap, login, logindetails}) {
       setdetails(true);
     }
     secdetail();
-    
   }, []);
 
   let name;
@@ -66,18 +69,87 @@ function Dashboard({ data, swap, login, logindetails}) {
     setcontactdetails(user_array[e]);
   };
   const sendnoti = async (email) => {
-    const singlemsgchk = await fetch("/api/checkmessage", {
+    const allow = await fetch("/api/getname", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: email, reciever: login.user.email }),
+      body: JSON.stringify({ email: email }),
     });
-    const singlemsg = await singlemsgchk.json();
+    const allowswap = await allow.json();
+    const res = await fetch("/api/getname", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: login.user.email }),
+    });
+    const response = await res.json();
+    if (
+      (allowswap.user.section1 == response.user.section ||
+        allowswap.user.section2 == response.user.section ||
+        allowswap.user.section3 == response.user.section ||
+        allowswap.user.section4 == response.user.section) &&
+      (response.user.section1 == allowswap.user.section ||
+        response.user.section2 == allowswap.user.section ||
+        response.user.section3 == allowswap.user.section ||
+        response.user.section4 == allowswap.user.section)
+    ) {
 
-    if (singlemsg.success) {
-      toast.info(
-        "You have already sent a request or you have a pending request from this person.",
+      name = response.user.name;
+      section = response.user.section;
+      const data = {
+        name: name,
+        roll: response.user.roll,
+        email: login.user.email,
+        phone: response.user.phone,
+        section: section,
+        reciever: email,
+        message: "hi ! you have one swap request",
+      };
+      const res1 = await fetch("/api/addmessages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const response1 = await res1.json();
+
+      if(response1.success){
+        toast.success(
+          "Swap Request Send Successfully",
+          {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+      }
+      else{
+        toast.info(
+          "Swap Request Already sent Or you have Request from this person",
+          {
+            position: "bottom-left",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+        
+      }
+    } else {
+      toast.warn(
+        "You are not allowed to send swap request due to mismatch of section.",
         {
           position: "top-center",
           autoClose: 5500,
@@ -89,78 +161,6 @@ function Dashboard({ data, swap, login, logindetails}) {
           theme: "dark",
         }
       );
-    } else {
-      const allow = await fetch("/api/getname", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email }),
-      });
-      const allowswap = await allow.json();
-      const res = await fetch("/api/getname", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: login.user.email }),
-      });
-      const response = await res.json();
-      if (
-        (allowswap.user.section1 == response.user.section ||
-          allowswap.user.section2 == response.user.section ||
-          allowswap.user.section3 == response.user.section ||
-          allowswap.user.section4 == response.user.section) &&
-        (response.user.section1 == allowswap.user.section ||
-          response.user.section2 == allowswap.user.section ||
-          response.user.section3 == allowswap.user.section ||
-          response.user.section4 == allowswap.user.section)
-      ) {
-        toast.success("Sending swap request!!", {
-          position: "bottom-left",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-
-        name = response.user.name;
-        section = response.user.section;
-        const data = {
-          name: name,
-          roll: response.user.roll,
-          email: login.user.email,
-          phone: response.user.phone,
-          section: section,
-          reciever: email,
-          message: "hi ! you have one swap request",
-        };
-        const res1 = await fetch("/api/addmessages", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const response1 = await res1.json();
-      } else {
-        toast.warn(
-          "You are not allowed to send swap request due to mismatch of section.",
-          {
-            position: "top-center",
-            autoClose: 5500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          }
-        );
-      }
     }
   };
 
@@ -178,7 +178,7 @@ function Dashboard({ data, swap, login, logindetails}) {
         pauseOnHover
         theme="dark"
       />
-      
+
       {contact && (
         <div className="w-screen h-screen bg-black/50 z-30 backdrop-blur-0 flex items-center justify-center fixed   top-0 left-0">
           <div className="relative p-4">
@@ -200,10 +200,15 @@ function Dashboard({ data, swap, login, logindetails}) {
                 <p className="text-justify">Email : {contactdetails.email}</p>
                 <p className="text-justify">Phone : {contactdetails.phone}</p>
                 <div className="flex items-center justify-center space-x-10 mt-2">
-                  <a href={`https://wa.me/${contactdetails.phone}/`} target="_blank"><LiaWhatsapp  className="text-2xl text-green-500" /></a>
-                  <a href={`mailto:${contactdetails.email}`} target="_blank"><HiOutlineMail className="text-2xl text-red-500 " /></a>
-
-                  
+                  <a
+                    href={`https://wa.me/${contactdetails.phone}/`}
+                    target="_blank"
+                  >
+                    <LiaWhatsapp className="text-2xl text-green-500" />
+                  </a>
+                  <a href={`mailto:${contactdetails.email}`} target="_blank">
+                    <HiOutlineMail className="text-2xl text-red-500 " />
+                  </a>
                 </div>
               </div>
             )}
@@ -232,25 +237,39 @@ function Dashboard({ data, swap, login, logindetails}) {
         </div>
       )}
 
-        {!details &&
+      {!details && (
         <div
-        id="marketing-banner"
-        tabIndex={-1}
-        className="absolute mt-20  z-10 flex my-12 flex-col md:flex-row md:px-10 px-4 justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
-      >
-        {urstatus && <p className="flex items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
-          Congratulations!!!!  You have successfully swapped your section. Have a good sem ahead <Link className="text-purple-600 cursor-pointer font-semibold hover:underline ml-2"  href={'/SwapConfirm'}> Click To View</Link>
-        </p>}
-        <p className="flex capitalize items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
-          Your current section : {ursec} 
-        </p>
-        
-       {!urstatus && <p className="flex capitalize items-center text-sm font-normal test-[0.8rem] text-center text-gray-100">
-          Your section preferences : {ursec1!="EMPTY"&&ursec1}  {ursec2!="EMPTY"&&`/ ${ursec2}`}  {ursec3!="EMPTY"&&`/ ${ursec3}`}  {ursec4!="EMPTY"&&`/ ${ursec4}`}
-        </p>}
+          id="marketing-banner"
+          tabIndex={-1}
+          className="absolute mt-20  z-10 flex my-12 flex-col md:flex-row md:px-10 px-4 justify-between w-[calc(100%-2rem)] p-2 -translate-x-1/2 bg-slate-800 shadow-inner shadow-slate-950  rounded-lg lg:max-w-7xl left-1/2 top-10"
+        >
+          {urstatus && (
+            <p className="flex items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
+              Congratulations!!!! You have successfully swapped your section.
+              Have a good sem ahead{" "}
+              <Link
+                className="text-purple-600 cursor-pointer font-semibold hover:underline ml-2"
+                href={"/SwapConfirm"}
+              >
+                {" "}
+                Click To View
+              </Link>
+            </p>
+          )}
+          <p className="flex capitalize items-center text-sm font-normal test-[0.8rem] text-center text-purple-100">
+            Your current section : {ursec}
+          </p>
 
-        
-      </div>}
+          {!urstatus && (
+            <p className="flex capitalize items-center text-sm font-normal test-[0.8rem] text-center text-gray-100">
+              Your section preferences : {ursec1 != "EMPTY" && ursec1}{" "}
+              {ursec2 != "EMPTY" && `/ ${ursec2}`}{" "}
+              {ursec3 != "EMPTY" && `/ ${ursec3}`}{" "}
+              {ursec4 != "EMPTY" && `/ ${ursec4}`}
+            </p>
+          )}
+        </div>
+      )}
 
       <div className="h-16 md:h-3" />
 
@@ -361,7 +380,7 @@ function Dashboard({ data, swap, login, logindetails}) {
                         <td className="px-6 py-4 text-gray-50 ">
                           {item.section}
                         </td>
-                        
+
                         <td className="px-6 py-4 text-gray-50 ">
                           {item.section1 !== "EMPTY" && (
                             <span>{item.section1}</span>

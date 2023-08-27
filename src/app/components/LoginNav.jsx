@@ -4,11 +4,10 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import TimeAgo from 'react-timeago'
 import "react-toastify/dist/ReactToastify.css";
-import { BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { CgMenuGridO, CgClose } from "react-icons/cg";
-import { GoIssueClosed } from "react-icons/go";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 function LoginNav({ login, data }) {
@@ -181,7 +180,7 @@ function LoginNav({ login, data }) {
         <div className="w-screen h-screen bg-black/50 z-30 backdrop-blur-0 flex items-center justify-center fixed   top-0 left-0">
           <div className="relative p-4">
             <IoIosCloseCircleOutline
-              onClick={() => setacceptreq(false)}
+              onClick={() => {setacceptreq(false);setgetsure(false)}}
               className="absolute top-0 right-0 text-2xl text-purple-500 hover:text-red-500"
             />
 
@@ -320,6 +319,7 @@ function LoginNav({ login, data }) {
                 onClick={() => {
                   setnotification(!notification);
                   setprofile(false);
+                  setmobile(false)
                 }}
                 type="button"
                 className="hover:scale-95  relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-800 focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -348,6 +348,7 @@ function LoginNav({ login, data }) {
                     onClick={() => {
                       setnotification(false);
                       setprofile(!profile);
+                      setmobile(false)
                     }}
                     type="button"
                     className="relative hover:scale-95 flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-purple-800 focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -418,7 +419,7 @@ function LoginNav({ login, data }) {
                         msg_Array.map((item, i) => (
                           <div
                             key={i}
-                            className=" px-2 hover:scale-105 text-purple-500 bg-slate-700 m-1 rounded flex items-center justify-between"
+                            className="relative px-2 hover:scale-105 text-purple-500 bg-slate-700 m-1 rounded flex items-center justify-between"
                           >
                             <p
                               className="px-2 text-[0.9rem] text-purple-500  bg-transparent m-1 rounded"
@@ -450,6 +451,7 @@ function LoginNav({ login, data }) {
                                 <span className="t">reject</span>
                               </div>
                             </div> */}
+                            <TimeAgo className="absolute bottom-0 right-2 text-lime-400 text-[0.65rem]" date={item.createdAt} />
                           </div>
                         ))}
                       {nomessage && (
@@ -471,18 +473,33 @@ function LoginNav({ login, data }) {
           <div className="sm:hidden" id="mobile-menu">
             <div className="space-y-1 px-2 pb-3 pt-2">
               <Link
+                onClick={() => {
+                  setmobile(!mobile);
+                  setnotification(false);
+                  setprofile(false);
+                }}
                 href={"/About"}
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
               >
                 About
               </Link>
               <Link
+                onClick={() => {
+                  setmobile(!mobile);
+                  setnotification(false);
+                  setprofile(false);
+                }}
                 href={"/Manual"}
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
               >
                 Manual
               </Link>
               <Link
+                onClick={() => {
+                  setmobile(!mobile);
+                  setnotification(false);
+                  setprofile(false);
+                }}
                 href={"/Feedback"}
                 className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
               >

@@ -16,6 +16,8 @@ function Accountdata({ login, data }) {
   const [email, setemail] = useState("");
   let response;
   useEffect(() => {
+    console.log(data);
+    if(data.user!=null){
     response = data;
     setnames(response.user.name);
     setphone(response.user.phone);
@@ -24,7 +26,10 @@ function Accountdata({ login, data }) {
     setbranch(response.user.branch);
     setsemester(response.user.semester);
     setyear(response.user.year);
-    setsection(response.user.section);
+    setsection(response.user.section);}
+    else{
+      router.push("/");
+    }
   }, [response]);
 
   const handleChange = (e) => {
