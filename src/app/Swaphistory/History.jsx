@@ -40,7 +40,7 @@ function History({ data, userss }) {
           <p className="text-[1.2rem] mb-1 text-center text-purple-300">Keep a record of all your sent swap requests</p>
           <p className="text-[0.75rem] mb-10 text-center text-white">(Note : Rejected swap requests will automatically be deleted)</p>
           <hr className="w-[30%] border-2 border-purple-500 mx-auto mb-10" />
-          <div className="relative px-20 overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full  mx-auto rounded-xl text-sm text-left text-gray-500 ">
               <thead className="text-xs text-gray-100 uppercase bg-purple-700 ">
                 <tr>
