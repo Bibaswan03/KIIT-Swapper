@@ -65,10 +65,42 @@ function Dashboard({ data, swap, login, logindetails }) {
   let section;
 
   const toglenoti = (e) => {
+    if(dis){
+      toast.warn(
+        "Fill swap details to view contact",
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+    }
+    else{
     setcontact(true);
-    setcontactdetails(user_array[e]);
+    setcontactdetails(user_array[e]);}
   };
   const sendnoti = async (email) => {
+    if(dis){
+      toast.warn(
+        "Fill swap details to send swap request",
+        {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }
+      );
+    }
+    else{
     const allow = await fetch("/api/getname", {
       method: "POST",
       headers: {
@@ -105,7 +137,7 @@ function Dashboard({ data, swap, login, logindetails }) {
         phone: response.user.phone,
         section: section,
         reciever: email,
-        message: "hi ! you have one swap request",
+        message: "You have one swap request",
       };
       const res1 = await fetch("/api/addmessages", {
         method: "POST",
@@ -118,7 +150,7 @@ function Dashboard({ data, swap, login, logindetails }) {
 
       if(response1.success){
         toast.success(
-          "Swap Request Send Successfully",
+          "Swap request sent successfully",
           {
             position: "bottom-left",
             autoClose: 3000,
@@ -133,7 +165,7 @@ function Dashboard({ data, swap, login, logindetails }) {
       }
       else{
         toast.info(
-          "Swap Request Already sent Or you have Request from this person",
+          "Swap request already sent or you have pending request from this person",
           {
             position: "bottom-left",
             autoClose: 3000,
@@ -162,6 +194,7 @@ function Dashboard({ data, swap, login, logindetails }) {
         }
       );
     }
+  }
   };
 
   return (
@@ -300,7 +333,6 @@ function Dashboard({ data, swap, login, logindetails }) {
                 <option>Select category</option>
                 <option>roll</option>
                 <option>name</option>
-                <option>semester</option>
                 <option>section</option>
               </select>
             </button>
@@ -315,7 +347,7 @@ function Dashboard({ data, swap, login, logindetails }) {
                 id="search-dropdown"
                 className="block p-2.5 w-full z-20 text-[0.75rem] text-gray-100 bg-gray-800 rounded-r-lg 
                 focus:outline-none "
-                placeholder="Search Mockups, Logos, Design Templates..."
+                placeholder="Search by name, roll, section"
               />
             </div>
           </div>
@@ -397,14 +429,12 @@ function Dashboard({ data, swap, login, logindetails }) {
                         </td>
                         <td className="px-6 py-4 md:ml-3 flex items-center justify-center space-x-10">
                           <button
-                            disabled={dis}
                             className="disabled:cursor-not-allowed font-medium text-purple-600 dark:text-purple-500 hover:text-purple-400"
                             onClick={() => toglenoti(i)}
                           >
                             Contact
                           </button>
                           <button
-                            disabled={dis}
                             onClick={() => sendnoti(item.email)}
                             className=" disabled:cursor-not-allowed font-medium text-purple-600 dark:text-purple-500 hover:text-purple-400"
                           >

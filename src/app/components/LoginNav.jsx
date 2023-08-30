@@ -143,7 +143,7 @@ function LoginNav({ login, data }) {
   }, [msg_Array]);
 
   const logout = () => {
-    toast.success("Logging you out!!", {
+    toast.success("Logging you out", {
       position: "bottom-left",
       autoClose: 1500,
       hideProgressBar: false,

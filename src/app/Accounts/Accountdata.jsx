@@ -16,7 +16,6 @@ function Accountdata({ login, data }) {
   const [email, setemail] = useState("");
   let response;
   useEffect(() => {
-    console.log(data);
     if(data.user!=null){
     response = data;
     setnames(response.user.name);
@@ -60,7 +59,7 @@ function Accountdata({ login, data }) {
     let response = await res.json();
 
     if (response.success === "true") {
-      toast.success("Congrats! Your account is updated..", {
+      toast.success("Your account is updated..", {
         position: "bottom-left",
         autoClose: 1000,
         hideProgressBar: false,
