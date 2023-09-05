@@ -367,8 +367,8 @@ function Dashboard({ data, swap, login, logindetails }) {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {Object.values(user_array)
+          <tbody>
+              {user_array.length!=0 && Object.values(user_array)
                 .filter((item) => {
                   return search == "" ||
                     category == "" ||
@@ -436,6 +436,7 @@ function Dashboard({ data, swap, login, logindetails }) {
                 })}
             </tbody>
           </table>
+          <div>{user_array.length==0 && <p className="text-center my-10 capitalize text-white text-xl">No Matches Available for you at this moment <br/> please Comeback later... </p>}</div>
         </div>
       </div>
     </div>
