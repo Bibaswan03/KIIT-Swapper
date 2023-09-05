@@ -92,7 +92,7 @@ function History({ data, userss }) {
         <div className="h-[20vh] overflow-x-hidden text-4xl capitalize text-center text-white mt-64">
           <p>No Swap Requests sent yet</p>
           <p className="text-[1rem] text-purple-300">
-            Try send swap requests
+            Try sending swap requests
           </p>
         </div>
       )}

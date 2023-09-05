@@ -171,7 +171,7 @@ function ClientData({ login, response }) {
         theme: "dark",
       });
       setTimeout(() => {
-        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+        window.location = `${process.env.NEXT_PUBLIC_VERCEL_URL}/SectionData`;
       }, 500);
     }
   };

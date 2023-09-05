@@ -20,12 +20,13 @@ function Dashboard({ data, swap, login, logindetails }) {
   let dis = false;
   let semm = logindetails.user.semester;
   let branchh = logindetails.user.branch;
+  let s = logindetails.user.section
 
   for (i in data) {
     if (
       data[i].email != login.user.email &&
       data[i].semester == semm &&
-      data[i].branch == branchh
+      data[i].branch == branchh && (data[i].section1==s || data[i].section2==s || data[i].section3==s || data[i].section4==s) && (data[i].section==logindetails.user.section1 || data[i].section==logindetails.user.section2 || data[i].section==logindetails.user.section3 || data[i].section==logindetails.user.section4)
     ) {
       user_array.push(data[i]);
     }
@@ -65,93 +66,83 @@ function Dashboard({ data, swap, login, logindetails }) {
   let section;
 
   const toglenoti = (e) => {
-    if(dis){
-      toast.warn(
-        "Fill swap details to view contact",
-        {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
+    if (dis) {
+      toast.warn("Fill swap details to view contact", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      setcontact(true);
+      setcontactdetails(user_array[e]);
     }
-    else{
-    setcontact(true);
-    setcontactdetails(user_array[e]);}
   };
   const sendnoti = async (email) => {
-    if(dis){
-      toast.warn(
-        "Fill swap details to send swap request",
-        {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }
-      );
-    }
-    else{
-    const allow = await fetch("/api/getname", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
-    const allowswap = await allow.json();
-    const res = await fetch("/api/getname", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: login.user.email }),
-    });
-    const response = await res.json();
-    if (
-      (allowswap.user.section1 == response.user.section ||
-        allowswap.user.section2 == response.user.section ||
-        allowswap.user.section3 == response.user.section ||
-        allowswap.user.section4 == response.user.section) &&
-      (response.user.section1 == allowswap.user.section ||
-        response.user.section2 == allowswap.user.section ||
-        response.user.section3 == allowswap.user.section ||
-        response.user.section4 == allowswap.user.section)
-    ) {
-
-      name = response.user.name;
-      section = response.user.section;
-      const data = {
-        name: name,
-        roll: response.user.roll,
-        email: login.user.email,
-        phone: response.user.phone,
-        section: section,
-        reciever: email,
-        message: "You have one swap request",
-      };
-      const res1 = await fetch("/api/addmessages", {
+    if (dis) {
+      toast.warn("Fill swap details to send swap request", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      const allow = await fetch("/api/getname", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ email: email }),
       });
-      const response1 = await res1.json();
+      const allowswap = await allow.json();
+      const res = await fetch("/api/getname", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: login.user.email }),
+      });
+      const response = await res.json();
+      if (
+        (allowswap.user.section1 == response.user.section ||
+          allowswap.user.section2 == response.user.section ||
+          allowswap.user.section3 == response.user.section ||
+          allowswap.user.section4 == response.user.section) &&
+        (response.user.section1 == allowswap.user.section ||
+          response.user.section2 == allowswap.user.section ||
+          response.user.section3 == allowswap.user.section ||
+          response.user.section4 == allowswap.user.section)
+      ) {
+        name = response.user.name;
+        section = response.user.section;
+        const data = {
+          name: name,
+          roll: response.user.roll,
+          email: login.user.email,
+          phone: response.user.phone,
+          section: section,
+          reciever: email,
+          message: "You have one swap request",
+        };
+        const res1 = await fetch("/api/addmessages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        const response1 = await res1.json();
 
-      if(response1.success){
-        toast.success(
-          "Swap request sent successfully",
-          {
+        if (response1.success) {
+          toast.success("Swap request sent successfully", {
             position: "bottom-left",
             autoClose: 3000,
             hideProgressBar: false,
@@ -160,41 +151,38 @@ function Dashboard({ data, swap, login, logindetails }) {
             draggable: true,
             progress: undefined,
             theme: "dark",
-          }
-        );
-      }
-      else{
-        toast.info(
-          "Swap request already sent or you have pending request from this person",
-          {
-            position: "bottom-left",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          }
-        );
-        
-      }
-    } else {
-      toast.warn(
-        "You are not allowed to send swap request due to mismatch of section.",
-        {
-          position: "top-center",
-          autoClose: 5500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+          });
+        } else {
+          toast.info(
+            "Swap request already sent or you have pending request from this person",
+            {
+              position: "bottom-left",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            }
+          );
         }
-      );
+      } else {
+        toast.warn(
+          "You are not allowed to send swap request due to mismatch of section.",
+          {
+            position: "top-center",
+            autoClose: 5500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        );
+      }
     }
-  }
   };
 
   return (
@@ -305,9 +293,9 @@ function Dashboard({ data, swap, login, logindetails }) {
       )}
 
       <div className="h-16 md:h-3" />
-
+        
       <div className="mt-10 mx-4">
-        <form>
+        <form className="">
           <div className={`flex mt-24 mb-10 md:px-64 mx-2 `}>
             <label
               htmlFor="search-dropdown"
@@ -351,10 +339,11 @@ function Dashboard({ data, swap, login, logindetails }) {
               />
             </div>
           </div>
+          
         </form>
-
+        
         <h1 className="my-4 text-center text-2xl font-bold text-cente capitalize text-purple-200">
-          All options
+          Available options
         </h1>
         <hr className="w-[30%] border-2 border-purple-500 mx-auto px-10 mb-10" />
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
